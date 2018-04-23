@@ -1,0 +1,26 @@
+{
+  "name": "@osjs/pam-auth",
+  "version": "1.0.0",
+  "description": "OS.js v3 PAM authentication provider",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/os-js/osjs-pam-auth.git"
+  },
+  "keywords": [
+    "osjs"
+  ],
+  "dependencies": {
+    "@osjs/server": "^3.0.0-alpha.10",
+    "authenticate-pam": "^1.0.2"
+  },
+  "author": "Anders Evenrud <andersevenrud@gmail.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/os-js/osjs-pam-auth/issues"
+  },
+  "homepage": "https://github.com/os-js/osjs-pam-auth#readme"
+}
