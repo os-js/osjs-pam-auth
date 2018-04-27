@@ -1,6 +1,6 @@
 {
   "name": "@osjs/pam-auth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OS.js v3 PAM authentication provider",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "osjs"
   ],
   "dependencies": {
-    "@osjs/server": "^3.0.0-alpha.10",
+    "@osjs/server": "^3.0.0-alpha.12",
     "authenticate-pam": "^1.0.2"
   },
   "author": "Anders Evenrud <andersevenrud@gmail.com>",
