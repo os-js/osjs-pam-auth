@@ -29,6 +29,7 @@
  */
 
 const pam = require('authenticate-pam');
+const userid = require('userid');
 
 const authenticate = (username, password) =>
   new Promise((resolve, reject) =>
@@ -43,7 +44,8 @@ module.exports = (core, options) => ({
     try {
       await authenticate(username, password);
 
-      return {username};
+      const id = userid.uid(username);
+      return {id, username};
     } catch (e) {
       console.error(e);
     }
