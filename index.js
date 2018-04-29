@@ -40,8 +40,6 @@ module.exports = (core, options) => ({
   login: async (req, res) => {
     const {username, password} = req.body;
 
-    const invalid = (error = 'Invalid login') => res.status(403).json({error});
-
     try {
       await authenticate(username, password);
 
