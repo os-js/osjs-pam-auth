@@ -20,12 +20,12 @@ This is the PAM Auth Provider for OS.js v3
 In your server initialization script:
 
 ```
-const PAMAuth = require('@osjs/pam-auth');
+const pamAuth = require('@osjs/pam-auth');
 
 const instance = new Core(config, {
   registerDefault: {
     auth: {
-      class: PAMAuth
+      adapter: pamAuth
     }
   }
 });

@@ -29,16 +29,15 @@
  */
 
 const pam = require('authenticate-pam');
-const {Auth} = require('@osjs/server');
 
 const authenticate = (username, password) =>
   new Promise((resolve, reject) =>
               pam.authenticate(username, password, err =>
                   err ? reject(err) : resolve(true)));
 
-class PAMAuth extends Auth {
-
-  async login(req, res) {
+module.exports = (core, options) => ({
+  logout: () => Promise.resolve(true),
+  login: async (req, res) => {
     const {username, password} = req.body;
 
     const invalid = (error = 'Invalid login') => res.status(403).json({error});
@@ -46,15 +45,11 @@ class PAMAuth extends Auth {
     try {
       await authenticate(username, password);
 
-      req.session.username = username;
-      res.json({
-        user: {username}
-      });
+      return {username};
     } catch (e) {
       console.error(e);
-      invalid();
     }
-  }
-}
 
-module.exports = PAMAuth;
+    return false;
+  }
+});

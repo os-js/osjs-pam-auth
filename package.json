@@ -14,7 +14,6 @@
     "osjs"
   ],
   "dependencies": {
-    "@osjs/server": "^3.0.0-alpha.12",
     "authenticate-pam": "^1.0.2"
   },
   "author": "Anders Evenrud <andersevenrud@gmail.com>",
