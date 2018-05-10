@@ -22,11 +22,9 @@ In your server initialization script:
 ```
 const pamAuth = require('@osjs/pam-auth');
 
-const instance = new Core(config, {
-  registerDefault: {
-    auth: {
-      adapter: pamAuth
-    }
+core.register(AuthServiceProvider, {
+  args: {
+    adapter: pamAuth
   }
 });
 ```
