@@ -13,8 +13,6 @@
 
 This is the PAM Auth Provider for OS.js v3
 
-**PLEASE NOTE THAT THIS IS AN ALPHA PRE-RELEASE AND SUBJECT TO CHANGE WITHOUT NOTICE**
-
 ## Usage
 
 In your server initialization script:
