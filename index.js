@@ -33,8 +33,8 @@ const userid = require('userid');
 
 const authenticate = (username, password) =>
   new Promise((resolve, reject) =>
-              pam.authenticate(username, password, err =>
-                  err ? reject(err) : resolve(true)));
+    pam.authenticate(username, password, err =>
+      err ? reject(err) : resolve(true)));
 
 module.exports = (core, options) => ({
   logout: () => Promise.resolve(true),
