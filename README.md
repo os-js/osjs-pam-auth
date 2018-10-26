@@ -13,14 +13,18 @@
 
 This is the PAM Auth Provider for OS.js v3
 
+Please see the [OS.js Authentication Guide](https://manual.os-js.org/v3/guide/auth/) for general information.
+
 ## Usage
 
-In your server initialization script:
+In your server bootstrap script (`src/server/index.js`):
 
 ```
+// In the top of the file load the library
 const pamAuth = require('@osjs/pam-auth');
 
-core.register(AuthServiceProvider, {
+// Locate this line in the file and add the following:
+osjs.register(AuthServiceProvider, {
   args: {
     adapter: pamAuth
   }
