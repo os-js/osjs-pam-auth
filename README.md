@@ -17,6 +17,8 @@ Please see the [OS.js Authentication Guide](https://manual.os-js.org/v3/guide/au
 
 ## Usage
 
+### Configure Server
+
 In your server bootstrap script (`src/server/index.js`):
 
 ```
@@ -29,4 +31,24 @@ osjs.register(AuthServiceProvider, {
     adapter: pamAuth
   }
 });
+```
+
+### Configure Client
+
+In your client configuration file (`src/client/config.js`) file remove the automatic login:
+
+```javascript
+module.exports = {
+  public: '/',
+
+  // Either comment out this section, or remove it entirely
+  /*
+  auth: {
+    login: {
+      username: 'demo',
+      password: 'demo'
+    }
+  }
+  */
+};
 ```
