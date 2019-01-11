@@ -48,6 +48,8 @@ osjs.register(AuthServiceProvider, {
 });
 ```
 
+*A restart of the server is required*
+
 ### Configure Client
 
 In your client configuration file (`src/client/config.js`) file remove the automatic login:
@@ -67,6 +69,8 @@ module.exports = {
   */
 };
 ```
+
+*Rebuilding the client is required*
 
 ## Contribution
 
