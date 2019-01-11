@@ -12,9 +12,9 @@
 [![Donate](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://paypal.me/andersevenrud)
 [![Community](https://img.shields.io/badge/join-community-green.svg)](https://community.os-js.org/)
 
-# OS.js v3 PAM Auth Provider
+# OS.js v3 PAM Auth Provider Adapter
 
-This is the PAM Auth Provider for OS.js v3
+This is the PAM Auth Provider Adapter for OS.js v3
 
 Please see the [OS.js Authentication Guide](https://manual.os-js.org/v3/guide/auth/) for general information.
 

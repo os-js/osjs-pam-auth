@@ -1,7 +1,7 @@
 {
   "name": "@osjs/pam-auth",
   "version": "1.0.4",
-  "description": "OS.js v3 PAM authentication provider",
+  "description": "OS.js v3 PAM authentication provider adapter",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
