@@ -24,6 +24,12 @@ Please see the [OS.js Authentication Guide](https://manual.os-js.org/v3/guide/au
 npm install --save --production @osjs/pam-auth
 ```
 
+**Please note that you need the PAM development libraries installed on your host computer.** If you don't have this, you'll get errors during npm installation.
+
+This varies depending on your distro:
+
+* Ubuntu: `sudo apt install libpam-dev`
+
 ## Usage
 
 ### Configure Server
