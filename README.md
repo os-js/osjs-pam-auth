@@ -72,6 +72,30 @@ module.exports = {
 
 *Rebuilding the client is required*
 
+## Custom groups
+
+By default, groups are read from `/etc/group`, but you can customize this:
+
+```javascript
+osjs.register(AuthServiceProvider, {
+  args: {
+    adapter: pamAuth,
+    config: {
+      native: false,
+      config: '/etc/osjs/groups.json' // Default
+    }
+  }
+});
+```
+
+The format of this file is:
+
+```json
+{
+  "username": ["group1", "group2"]
+}
+```
+
 ## Contribution
 
 * **Become a [Patreon](https://www.patreon.com/user?u=2978551&ty=h&u=2978551)**

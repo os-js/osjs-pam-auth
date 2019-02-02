@@ -28,28 +28,78 @@
  * @licence Simplified BSD License
  */
 
+const fs = require('fs-extra');
 const pam = require('authenticate-pam');
 const userid = require('userid');
+
+const mapGroups = contents => {
+  const result = {};
+
+  contents.trim()
+    .split('\n')
+    .forEach(line => {
+      /* eslint-disable-next-line */
+      const [name, secret, gid, users] = line.split(':');
+      if (users.length) {
+        users.split(',').forEach(uname => {
+          if (typeof result[uname] === 'undefined') {
+            result[uname] = [];
+          }
+
+          result[uname] = [...result[uname], name];
+        });
+      }
+    });
+
+  return result;
+};
+
+const readNativeGroups = () => username =>
+  fs.readFile('/etc/group', 'utf8')
+    .then(mapGroups)
+    .then(result => (result[username] || []));
+
+const readCustomGroups = options => username =>
+  fs.readJson(options.config)
+    .then(json => (json[username] || []));
 
 const authenticate = (username, password) =>
   new Promise((resolve, reject) =>
     pam.authenticate(username, password, err =>
       err ? reject(err) : resolve(true)));
 
-module.exports = (core, options) => ({
+const readGroups = options => options.native
+  ? readNativeGroups(options)
+  : readCustomGroups(options);
+
+module.exports = (core, options = {}) => ({
   logout: () => Promise.resolve(true),
   login: async (req, res) => {
     const {username, password} = req.body;
 
-    try {
-      await authenticate(username, password);
+    return authenticate(username, password)
+      .then(() => {
+        const done = groups => {
+          const id = userid.uid(username);
+          return {id, username, groups};
+        };
 
-      const id = userid.uid(username);
-      return {id, username};
-    } catch (e) {
-      console.error(e);
-    }
+        return readGroups(Object.assign({
+          native: true,
+          config: '/etc/osjs/groups.json'
+        }, options))(username)
+          .then(groups => {
+            return done(groups);
+          })
+          .catch(error => {
+            console.warn(error);
+            return done([]);
+          });
+      })
+      .catch(error => {
+        console.error(error);
 
-    return false;
+        return false;
+      });
   }
 });
