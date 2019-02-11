@@ -30,36 +30,51 @@
 
 const fs = require('fs-extra');
 const pam = require('authenticate-pam');
+
+// TODO FIXME We don't need this anymore ?!
 const userid = require('userid');
 
-const mapGroups = contents => {
-  const result = {};
-
-  contents.trim()
-    .split('\n')
-    .forEach(line => {
-      /* eslint-disable-next-line */
+const readNixGroups = () =>
+  fs.readFile('/etc/group', 'utf8')
+    .then(contents => contents.trim().split('\n'))
+    .then(lines => lines.map(line => {
+      // eslint-disable-next-line
       const [name, secret, gid, users] = line.split(':');
-      if (users.length) {
-        users.split(',').forEach(uname => {
-          if (typeof result[uname] === 'undefined') {
-            result[uname] = [];
-          }
+      return {name, gid, users: users ? users.split(',') : []};
+    }));
 
-          result[uname] = [...result[uname], name];
-        });
-      }
-    });
+const readNixPasswd = () =>
+  fs.readFile('/etc/passwd', 'utf8')
+    .then(contents => contents.trim().split('\n'))
+    .then(lines => lines.map(line => {
+      // eslint-disable-next-line
+      const [name, enc, uid, gid, desc, home, shell] = line.split(':');
+      return {name, enc, uid, gid, desc, home, shell};
+    }));
 
-  return result;
+const readNativeFile = () => async (username) => {
+  const groups = await readNixGroups();
+  const passwd = await readNixPasswd();
+
+  const userGroups = groups
+    .filter(g => g.users.indexOf(username) !== -1)
+    .map(g => g.name);
+
+  const userInfo = passwd
+    .find(p => p.name === username);
+
+  const defaultGroup = userInfo
+    ? groups.find(g => g.gid === userInfo.gid)
+    : null;
+
+  if (defaultGroup) {
+    userGroups.push(defaultGroup.name);
+  }
+
+  return userGroups;
 };
 
-const readNativeGroups = () => username =>
-  fs.readFile('/etc/group', 'utf8')
-    .then(mapGroups)
-    .then(result => (result[username] || []));
-
-const readCustomGroups = options => username =>
+const readCustomFile = options => username =>
   fs.readJson(options.config)
     .then(json => (json[username] || []));
 
@@ -69,8 +84,8 @@ const authenticate = (username, password) =>
       err ? reject(err) : resolve(true)));
 
 const readGroups = options => options.native
-  ? readNativeGroups(options)
-  : readCustomGroups(options);
+  ? readNativeFile(options)
+  : readCustomFile(options);
 
 module.exports = (core, options = {}) => ({
   logout: () => Promise.resolve(true),
