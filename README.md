@@ -36,7 +36,7 @@ This varies depending on your distro:
 
 In your server bootstrap script (`src/server/index.js`):
 
-```
+```javascript
 // In the top of the file load the library
 const pamAuth = require('@osjs/pam-auth');
 
@@ -46,6 +46,16 @@ osjs.register(AuthServiceProvider, {
     adapter: pamAuth
   }
 });
+```
+
+If you want to change the home directories of users, change your configuration (`src/server/config.js`):
+
+```javascript
+{
+  vfs: {
+    root: '/home'
+  }
+}
 ```
 
 *A restart of the server is required*
