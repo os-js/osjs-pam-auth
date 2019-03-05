@@ -27,28 +27,24 @@
  * @author  Anders Evenrud <andersevenrud@gmail.com>
  * @licence Simplified BSD License
  */
+const ipc = require('node-ipc');
+const auth = require('./authenticate.js');
 
-const IPCAdapter = require('./src/adapters/ipc.js');
-const DirectAdapter = require('./src/adapters/direct.js');
+ipc.config.id = 'osjs-pam-auth-server';
+ipc.config.retry = 1500;
+ipc.config.silent = true;
+ipc.serve(() => {
+  ipc.server.on('message', (message, socket) => {
+    const {options, uuid, login: {username, password}} = JSON.parse(message);
 
-module.exports = (core, options = {}) => {
-  const o = Object.assign({
-    ipc: false,
-    native: true,
-    config: '/etc/osjs/groups.json'
-  }, options);
+    const done = (error, result) => {
+      const data = JSON.stringify({error, uuid, result});
+      ipc.server.emit(socket, 'message', data);
+    };
 
-  const adapter = o.ipc
-    ? new IPCAdapter(o)
-    : new DirectAdapter(o);
-
-  return {
-    init: () => adapter.init(),
-
-    logout: req =>
-      adapter.logout(req.session.user),
-
-    login: req =>
-      adapter.login(req.body)
-  };
-};
+    auth(options)(username, password)
+      .then(result => done(null, result))
+      .catch(error => done(error, null));
+  });
+});
+ipc.server.start();

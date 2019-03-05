@@ -27,28 +27,22 @@
  * @author  Anders Evenrud <andersevenrud@gmail.com>
  * @licence Simplified BSD License
  */
+const auth = require('../authenticate.js');
 
-const IPCAdapter = require('./src/adapters/ipc.js');
-const DirectAdapter = require('./src/adapters/direct.js');
+module.exports = class DirectAdapter {
+  constructor(options) {
+    this.options = options;
+  }
 
-module.exports = (core, options = {}) => {
-  const o = Object.assign({
-    ipc: false,
-    native: true,
-    config: '/etc/osjs/groups.json'
-  }, options);
+  init() {
+    return Promise.resolve(true);
+  }
 
-  const adapter = o.ipc
-    ? new IPCAdapter(o)
-    : new DirectAdapter(o);
+  logout() {
+    return Promise.resolve(true);
+  }
 
-  return {
-    init: () => adapter.init(),
-
-    logout: req =>
-      adapter.logout(req.session.user),
-
-    login: req =>
-      adapter.login(req.body)
-  };
+  login({username, password}) {
+    return auth(this.options)(username, password);
+  }
 };

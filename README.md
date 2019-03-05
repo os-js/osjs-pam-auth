@@ -106,6 +106,23 @@ The format of this file is:
 }
 ```
 
+## Using IPC
+
+You can also connect this adapter up to a IPC running as a separate user if you can't use PAM as the user OS.js server runs on.
+
+```javascript
+osjs.register(AuthServiceProvider, {
+  args: {
+    adapter: pamAuth,
+    config: {
+      ipc: true
+    }
+  }
+});
+```
+
+And then run the `src/ipc.js` server as the required user.
+
 ## Contribution
 
 * **Become a [Patreon](https://www.patreon.com/user?u=2978551&ty=h&u=2978551)**
