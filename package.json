@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/os-js/osjs-pam-auth#readme",
   "devDependencies": {
+    "@osjs/eslint-config": "^1.0.0",
     "eslint": "^5.1.0"
   }
 }
