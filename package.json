@@ -20,7 +20,7 @@
     "fs-extra": "^7.0.1",
     "node-ipc": "^9.1.1",
     "userid": "^0.3.1",
-    "uuid": "^3.3.2"
+    "uuid": "^3.4.0"
   },
   "author": "Anders Evenrud <andersevenrud@gmail.com>",
   "license": "BSD-2-Clause",
@@ -29,8 +29,8 @@
   },
   "homepage": "https://github.com/os-js/osjs-pam-auth#readme",
   "devDependencies": {
-    "@osjs/eslint-config": "^1.0.0",
-    "eslint": "^5.1.0"
+    "@osjs/eslint-config": "^1.0.2",
+    "eslint": "^5.16.0"
   },
   "eslintConfig": {
     "env": {
