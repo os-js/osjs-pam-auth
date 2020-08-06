@@ -77,7 +77,7 @@ const readCustomFile = options => username =>
 
 const authenticate = (username, password) =>
   new Promise((resolve, reject) =>
-    pamAuthenticate(username, password, err =>
+    pamAuthenticate({username, password}, err =>
       err ? reject(err) : resolve(true)));
 
 const readGroups = options => options.native
