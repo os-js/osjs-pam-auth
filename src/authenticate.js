@@ -29,7 +29,7 @@
  */
 const userid = require('userid'); // TODO FIXME We don't need this anymore ?!
 const fs = require('fs-extra');
-const pam = require('authenticate-pam');
+const {pamAuthenticate} = require('node-linux-pam');
 
 const readNixGroups = () =>
   fs.readFile('/etc/group', 'utf8')
@@ -77,7 +77,7 @@ const readCustomFile = options => username =>
 
 const authenticate = (username, password) =>
   new Promise((resolve, reject) =>
-    pam.authenticate(username, password, err =>
+    pamAuthenticate(username, password, err =>
       err ? reject(err) : resolve(true)));
 
 const readGroups = options => options.native
