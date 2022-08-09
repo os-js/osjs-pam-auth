@@ -14,7 +14,7 @@
 
 This is the PAM Auth Provider Adapter for OS.js v3
 
-Please see the [OS.js Authentication Guide](https://manual.os-js.org/v3/guide/auth/) for general information.
+Please see the [OS.js Authentication Guide](https://manual.os-js.org/guide/auth/) for general information.
 
 ## Installation
 
@@ -130,7 +130,7 @@ And then run the `src/ipc.js` server as the required user.
 
 ## Documentation
 
-See the [Official Manuals](https://manual.os-js.org/v3/) for articles, tutorials and guides.
+See the [Official Manuals](https://manual.os-js.org/) for articles, tutorials and guides.
 
 ## Links
 
